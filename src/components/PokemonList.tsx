@@ -1,4 +1,4 @@
-// import { Pokemon } from "../interface";
+import "./pokemon.css";
 
 interface Pokemon {
   name: string;
