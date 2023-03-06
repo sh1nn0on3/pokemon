@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
+import PokemonColection from "./components/PokemonColection";
+import { Pokemon, Pokemons } from "./interface";
 
-interface Pokemon {
-  name: string;
-  url: string;
-}
+// interface Pokemons {
+//   name: string;
+//   url: string;
+// }
+
+// interface Pokemon {
+//   id: number;
+//   name: string;
+//   sprites: {
+//     front_default: string;
+//   };
+// }
 
 const App: React.FC = () => {
-  const [pokemons, setPokemons] = useState<string[]>([]);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   // call API pokemon
   useEffect(() => {
@@ -18,7 +28,7 @@ const App: React.FC = () => {
         .then((res) => {
           // console.log("🚀 ~ file: App.tsx:12 ~ Api ~ res:", res.data.results);
           console.log(" successful !!!");
-          res.data.results.forEach(async (pokemon: Pokemon) => {
+          res.data.results.forEach(async (pokemon: Pokemons) => {
             const poke = await axios.get(
               `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
             );
@@ -39,7 +49,8 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <div className="container">
-        <div className="pokemon-header">Pokemon</div>
+        <header className="pokemon-header">Pokemon</header>
+        <PokemonColection pokemons={pokemons} />
       </div>
     </div>
   );
