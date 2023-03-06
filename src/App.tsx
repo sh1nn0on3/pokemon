@@ -19,15 +19,21 @@ import { Pokemon, Pokemons } from "./interface";
 
 const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [nextUrl, setNextUrl] = useState<string>("1");
 
   // call API pokemon
   useEffect(() => {
     const getPokemon = async () => {
       await axios
-        .get("https://pokeapi.co/api/v2/pokemon?limit=20&offset=1")
+        .get(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${nextUrl}`)
         .then((res) => {
           // console.log("🚀 ~ file: App.tsx:12 ~ Api ~ res:", res.data.results);
           console.log(" successful !!!");
+
+          // next url
+          // setNextUrl(res.data.next);
+
+          // get data from API -- name , uid , image , ...
           res.data.results.forEach(async (pokemon: Pokemons) => {
             const poke = await axios.get(
               `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
@@ -44,13 +50,20 @@ const App: React.FC = () => {
     return () => {
       getPokemon();
     };
-  }, []);
+  }, [nextUrl]);
+
+  const nextPage = () => {
+    setNextUrl((nextUrl) => nextUrl + 1);
+  };
 
   return (
     <div className="App">
       <div className="container">
         <header className="pokemon-header">Pokemon</header>
         <PokemonColection value={pokemons} />
+      </div>
+      <div className="btn">
+        <button onClick={nextPage}>Load more !!!</button>
       </div>
     </div>
   );
