@@ -1,9 +1,11 @@
-import React from 'react';
+import "./App.css";
 
 const App = () => {
   return (
-    <div>
-      
+    <div className="App">
+      <div className="container">
+        <header className="pokemon-header">Pokemon</header>
+      </div>
     </div>
   );
 };
