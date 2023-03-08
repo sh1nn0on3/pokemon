@@ -19,9 +19,10 @@ interface Props {
 const PokemonList: React.FC<Props> = (props) => {
   const { name, id, image, abilities, viewDetail, setDetail } = props;
   const [isSelected, setSelected] = useState(false);
+
   useEffect(() => {
     setSelected(id === viewDetail?.id);
-  }, [viewDetail]);
+  }, [viewDetail, id]);
 
   const closeDetail = () => {
     setDetail({
@@ -55,10 +56,10 @@ const PokemonList: React.FC<Props> = (props) => {
           <img src={image} alt="pokemon" />
         </section>
       )}
-       <section className="pokemon-list-container">
-          <p className="pokemon-name"> {name} </p>
-          <img src={image} alt="pokemon" />
-        </section>
+      <section className="pokemon-list-container">
+        <p className="pokemon-name"> {name} </p>
+        <img src={image} alt="pokemon" />
+      </section>
     </div>
   );
 };
